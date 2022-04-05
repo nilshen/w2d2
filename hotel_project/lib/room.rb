@@ -2,12 +2,12 @@ class Room
   attr_reader :capacity, :occupants
 
   def initialize(num)
-    @capacity = 3
+    @capacity = num
     @occupants = []
   end
 
   def full?
-    if occupants.length < 3
+    if occupants.length < capacity
         return false
     end
     true
