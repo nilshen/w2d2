@@ -16,8 +16,8 @@ class Startup
     false
     end 
             
-    def >(other_starup)
-        if self.funding > other_starup.funding
+    def >(other_startup)
+        if self.funding > other_startup.funding
             return true
         end
     false
@@ -26,7 +26,7 @@ class Startup
     def hire (employee_name, title)
         if self.salaries.has_key?(title)
         employee_name = Employee.new(employee_name, title)
-        employees << employee_name
+        @employees << employee_name
         else raise "Who's this?"
         end
     end 
@@ -49,6 +49,26 @@ class Startup
             pay_employee(employee)
         end
     end
+
+    def average_salary
+    total_salaries = 0
+        @employees.each do |employee|  #isnt the employee here is [name, title]
+        total_salaries += @salaries[employee.title]
+        end
+    total_salaries / @employees.length
+    end
+
+    def close 
+        @employees.length.times do 
+            @employees.pop
+        end
+        @funding = 0
+    end
+
+    def acquire(other_startup)
+        @funding += other_startup.funding
+        @salaries.merge!(other_startup.salaries) {|key, v1, v2| v1 }
+        @employees += other_startup.employees
+        other_startup.close
+    end
 end
-
-
